@@ -1,28 +1,28 @@
-== README
+I have the following models.
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+    class Author
+        include Tire::Model::Search
+        include Tire::Model::Callbacks
+        
+        has_many :books
+        has_many :tags #(eg: 'german', 'philosopher')
+    end
 
-Things you may want to cover:
+    class Book
+        belongs_to :author
+        belongs_to :book_type #(eg: 'paperback', 'hardcover')
+        has_many :tags #(eg: 'crime', 'drama')
+    end
+        
 
-* Ruby version
+I need help in understanding and writing the following search queries,
 
-* System dependencies
+Find all authors who 
+                     are tagged as 'german' AND 'philosopher'
+                     have written at least 1 book each of book_type 'paperback' AND 'hardcover'
+                     where each such book is tagged as 'crime' AND 'drama'
 
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
-
-
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+Find all authors who 
+                     are tagged as 'german' AND 'philosopher'
+                     have written at least 1 book of any book_type
+                     where that book is tagged as 'crime' AND 'drama'
